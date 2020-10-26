@@ -9,56 +9,66 @@ $(document).ready(function(){
     images[5]="images/6.png";
     images[6]="images/7.png";
     images[7]="images/8.png";
-    let index = 1;
+    let index = 0;
     let timeInterval = setInterval(ShowNextPicture,1000);
     function ShowNextPicture(){
-        $('#previous').show();
-        $('#next').show();
+        $("#gallery").attr('src',images[index]);
+        console.log(index)
+        
         if(index == 0){
             $("#next").show();
             $("#previous").hide();
         }
-        if(index === images.length-1){
-            index = 0;
-            $("#next").hide();
-            $("#previous").show();
-
-
+        if(index>0 && index<images.length-2){
+            $('#previous').show();
+            $('#next').show();
         }
-        $("#gallery").attr('src',images[index]);
-        console.log(index)
-        index++;
-       
+        if(index === images.length-1 || index>images.length){
+            index = -1;
+           $("#next").hide();
+           $("#previous").show();
+        }
+        index++;  
 }
 //$("#show-time").text(timeInterval.toString());
 
     $("#previous").click(function(){
-        console.log("You have pressed previous"+ index);
-        if(index === 0)
-        {
-            $("#previous").hide();
-            return
-        }
-        else
-        {
-            $("#next").show();
-            index--;
+        if(index>=0 && index<images.length){
             $("#gallery").attr('src',images[index]);
-        }
+            console.log(index)
+            index--;
+            $("#next").show();
+            $("#previous").show();
+            }
+            if(index===-1){
+              $("#previous").hide();
+              index++
+               
+            }
+            if(index=== images.length){
+                $("#next").hide();
+            }
+            console.log(index+" end")
   
     })
     $("#next").click(function(){
-        console.log("You have pressed next"+ index);
-        if(index === images.length-1)
-        {
-            $("#next").hide();
+        if(index<images.length){
+        $("#gallery").attr('src',images[index]);
+        index++;
+        $("#next").show();
+        $("#previous").show();
         }
-        else{
-            $("#previous").show();
-            index++;
-            $("#gallery").attr('src',images[index]);
-            $("#next").show();
+        if(index===images.length){
+          $("#next").hide();
+           
         }
+        if(index===1){
+            $("#previous").hide();
+        }
+    
+  
+        
+        console.log(index)
 
     })
     $("#button").click(function(){
